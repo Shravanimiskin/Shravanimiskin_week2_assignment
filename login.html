@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login or Register - My Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login and Registration Form -->
+    <div class="auth-container">
+        <h2 id="formTitle">Login to My Blog</h2>
+        <form id="authForm">
+            <!-- Username Field -->
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+
+            <!-- Password Field -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+
+            <!-- Confirm Password Field for Registration Only -->
+            <div id="confirmPasswordField" style="display: none;">
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword">
+            </div>
+
+            <!-- Email Field for Registration Only -->
+            <div id="emailField" style="display: none;">
+                <label for="email">Email:</label>
+                <input type="email" id="email">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="authBtn">Login</button>
+        </form>
+
+        <!-- Toggle Between Login and Registration -->
+        <p id="toggleText">Don't have an account? <a href="#" id="toggleLink">Register here</a></p>
+
+        <!-- Error Message -->
+        <p id="errorMessage" style="color: red; display: none;"></p>
+    </div>
+
+    <script>
+        // Elements
+        const formTitle = document.getElementById('formTitle');
+        const authForm = document.getElementById('authForm');
+        const authBtn = document.getElementById('authBtn');
+        const toggleText = document.getElementById('toggleText');
+        const toggleLink = document.getElementById('toggleLink');
+        const emailField = document.getElementById('emailField');
+        const confirmPasswordField = document.getElementById('confirmPasswordField');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Hardcoded user data (for demonstration)
+        const registeredUsers = [
+            { username: 'user1', password: 'password1' }
+            // Add more users as needed
+        ];
+
+        // Toggle between Login and Register
+        let isLogin = true;
+
+        toggleLink.addEventListener('click', function(event) {
+            event.preventDefault();
+            isLogin = !isLogin;
+
+            if (isLogin) {
+                formTitle.textContent = 'Login to My Blog';
+                authBtn.textContent = 'Login';
+                toggleText.innerHTML =` Don't have an account? <a href="#" id="toggleLink">Register here</a>`;
+                emailField.style.display = 'none';
+                confirmPasswordField.style.display = 'none';
+            } else {
+                formTitle.textContent = 'Register for My Blog';
+                authBtn.textContent = 'Register';
+                toggleText.innerHTML = `Already have an account? <a href="#" id="toggleLink">Login here</a>`;
+                emailField.style.display = 'block';
+                confirmPasswordField.style.display = 'block';
+            }
+
+            // Hide error message when switching modes
+            errorMessage.style.display = 'none';
+        });
+
+        // Handle Form Submission
+        authForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (isLogin) {
+                // Check if user exists in the registeredUsers array
+                const user = registeredUsers.find(user => user.username === username && user.password === password);
+
+                if (user) {
+                    // Redirect to main blog page if login is successful
+                    window.location.href = 'index.html';
+                } else {
+                    // Show error message if user is not registered
+                    errorMessage.textContent = 'User not found. Please register first.';
+                    errorMessage.style.display = 'block';
+                }
+            } else {
+                const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+                // Validate if passwords match
+                if (password !== confirmPassword) {
+                    errorMessage.textContent = 'Passwords do not match. Please try again.';
+                    errorMessage.style.display = 'block';
+                    return;
+                }
+
+                // Simulate registration process
+                registeredUsers.push({ username: username, password: password });
+                
+                // Switch to login mode after registration
+                isLogin = true;
+                formTitle.textContent = 'Login to My Blog';
+                authBtn.textContent = 'Login';
+                toggleText.innerHTML = `Don't have an account? <a href="#" id="toggleLink">Register here</a>`;
+                emailField.style.display = 'none';
+                confirmPasswordField.style.display = 'none';
+
+                errorMessage.textContent = 'Registration successful! Please log in.';
+                errorMessage.style.color = 'green';
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

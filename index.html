@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>My Blog</h1>
+       
+        <button id="createPostBtn">Create Post</button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <div id="postCreatedMessage" class="postCreatedMessage">
+            Post created successfully!
+        </div>
+        <section class="post-container">
+            <!-- Blog posts will be dynamically inserted here -->
+        </section>
+    </main>
+
+    <!-- Create Post Modal -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="modal-close">&times;</span>
+            <h2>Create a New Post</h2>
+            <form id="postForm">
+                <label for="postCategory">Category:</label>
+                <input type="text" id="postCategory" required>
+
+                <label for="postTitle">Title:</label>
+                <input type="text" id="postTitle" required>
+
+                <label for="postDescription">Description:</label>
+                <textarea id="postDescription" rows="4" required></textarea>
+
+                <button type="submit" id="postSubmitBtn">Create Post</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Post Detail Modal -->
+    <div id="postDetailModal" class="modal">
+        <div class="modal-content">
+            <span id="closeDetailModal" class="modal-close">&times;</span>
+            <h1 id="detailTitle"></h1>
+            <span id="detailDate"></span>
+            <p id="detailDescription"></p>
+            <button id="editPostBtn">Edit Post</button>
+            <button id="deletePostBtn">Delete Post</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+   
+
+    <script src="script.js"></script>
+</body>
+</html>
